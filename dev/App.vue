@@ -2,6 +2,9 @@
   <div id="app" style="font-size:40px">
     <BMWeek ref="week" @cur-week-changed="weekChanged" style="font-size:40px"></BMWeek>
     <div @click="toDate">选中指定日期</div>
+    <div>
+      <BMRegion></BMRegion>
+    </div>
   </div>
 </template>
 
