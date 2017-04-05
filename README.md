@@ -12,7 +12,7 @@
  npm install bm-vue-component --save
 ```
 
-#### 入口 Main.js
+#### 入口~ Main.js
 
 ```javascript
 import 'bm-vue-component/dist/style.css'
