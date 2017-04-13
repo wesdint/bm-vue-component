@@ -31,27 +31,27 @@ export default {
   margin-top: 30px;
 }
 
-h1, h2, h3 {
-  font-weight: normal;
-  margin: 0;
-  padding: 0;
-}
+/*h1, h2, h3 {*/
+  /*font-weight: normal;*/
+  /*margin: 0;*/
+  /*padding: 0;*/
+/*}*/
 
-ul {
-  list-style-type: none;
-  padding: 0;
-}
+/*ul {*/
+  /*list-style-type: none;*/
+  /*padding: 0;*/
+/*}*/
 
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
+/*li {*/
+  /*display: inline-block;*/
+  /*margin: 0 10px;*/
+/*}*/
 
-a {
-  color: #42b983;
-}
-.t-center{
-  text-align: center;
-  margin: 20px;
-}
+/*a {*/
+  /*color: #42b983;*/
+/*}*/
+/*.t-center{*/
+  /*text-align: center;*/
+  /*margin: 20px;*/
+/*}*/
 </style>

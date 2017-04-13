@@ -5,29 +5,13 @@
     <div id="addr' + opts.id + '" class="rs-contain addr">
       <div class="rs-header">
         <ul class="clearfix addr-tabs">
-          <li class="fl tabs tabs-province active" data-id="province"><span class="f24">请选择</span></li>
-          <li class="fl tabs tabs-city" data-id="city"><span class="f24">请选择</span></li>
-          <li class="fl tabs tabs-county" data-id="county"><span class="f24">请选择</span></li>
+          <li class="fl tabs tabs-province active" v-for="item in titleDataList"><span class="f24">{{item}}</span></li>
           <li class="shut-down fr" style="display: none;">完成</li>
         </ul>
       </div>
       <div class="re-content">
-        <ul class="addr-list-nzone clearfix conts-province" style="display:block">
-          <li><span>广东省</span></li>
-          <li><span>广西省</span></li>
-          <li><span>湖南省</span></li>
-          <li><span>福建省</span></li>
-          <li><span>北京市</span></li>
-        </ul>
-        <ul class="addr-list-nzone clearfix conts-city">
-          <li><span>广州市</span></li>
-          <li><span>深圳市</span></li>
-          <li><span>东莞市</span></li>
-        </ul>
-        <ul class="addr-list-nzone clearfix conts-county">
-          <li><span>天河区</span></li>
-          <li><span>海珠区</span></li>
-          <li><span>越秀区</span></li>
+        <ul ref="regionBlock" class="addr-list-nzone clearfix conts-province" v-if="displayBlock">
+          <li v-for="item in regionData[regionType]" @click="pickRegion(item)"><span :class="{active: item.dcode === (picked[regionType].data ? picked[regionType].data.dcode : false)}">{{item.dname}}</span></li>
         </ul>
       </div>
     </div>
@@ -38,7 +22,8 @@
   .rs-contain {
     position: absolute;
     bottom: 0;
-    width: 100%;
+    left: 0;
+    right: 0;
     background: white
   }
 
@@ -81,6 +66,7 @@
 
   .addr-list-nzone {
     padding-left: 1rem;
+    height: 50vh - 1.8rem;
   }
 
   .addr-list-nzone > li {
@@ -105,16 +91,91 @@
 .f24 {
   font-size:12px;;
 }
+ ul {
+   margin:0;
+   padding: 0;
+ }
+  li {
+    display: block;
+    margin:0;
+  }
+  .fl {
+    float: left;
+  }
+  /* 清除浮动 */
+  .clearfix {*zoom: 1;}
+  .clearfix:after {
+    content: '';
+    display: block;
+    clear: both;
+    visibility: hidden;
+  }
 </style>
 
 <script>
   /**
    * Created by Wesdint on 2017/4/5.
    */
+  import axios from 'axios'
   export default {
     name: 'Region',
     data () {
-      return {}
+      return {
+        displayBlock: true,
+        regionData: {
+          province: null,
+          city: null,
+          county: null,
+          street: null
+        },
+        regionType: 'province',
+        titleDataList: ['请选择'],
+        picked: {
+          province: {
+            scrollTop: 0,
+            data: null
+          },
+          city: {
+            scrollTop: 0,
+            data: null
+          },
+          county: {
+            scrollTop: 0,
+            data: null
+          },
+          street: {
+            scrollTop: 0,
+            data: null
+          }
+        },
+        blockIndex: 0
+      }
+    },
+    methods: {
+      regionPost (data) {
+        const request = axios.create({
+          baseURL: 'http://tmallapi.bluemoon.com.cn/moonRegion/region/getRegionSelect.action',
+          timeout: 10000,
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        })
+        return request.post('', JSON.stringify(data))
+      },
+      pickRegion (item) {
+        this.picked[this.regionType].data = item
+        this.picked[this.regionType].scrollTop = this.$refs.regionBlock.scrollTop
+        this.titleDataList[0] = item.dname
+        this.titleDataList[1] = '请选择'
+      }
+    },
+    mounted () {
+      this.regionPost({
+        pid: 0,
+        type: 'province'
+      }).then((result) => {
+        this.regionData.province = result.data.lists
+      })
     }
   }
 </script>
