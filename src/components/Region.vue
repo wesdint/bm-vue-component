@@ -128,6 +128,18 @@
           county: null,
           street: null
         },
+        provinces:[{
+          id:1,
+          name:"guangdong"
+        }],
+        citiesMap:{
+          1:[
+            {
+              id:12,
+              name:'gz'
+            }
+          ]
+        },
         regionType: 'province',
         titleDataList: ['请选择'],
         picked: {
@@ -165,8 +177,9 @@
       pickRegion (item) {
         this.picked[this.regionType].data = item
         this.picked[this.regionType].scrollTop = this.$refs.regionBlock.scrollTop
-        this.titleDataList[0] = item.dname
-        this.titleDataList[1] = '请选择'
+
+//        this.titleDataList[0] = item.dname
+//        this.titleDataList[1] = '请选择'
       }
     },
     mounted () {
